@@ -1,0 +1,19 @@
+Tópicos Projeto 
+
+Usuários e sistema de autenticação (30%)
+
+Rota de cadastro de usuários(dados pessoais e credenciais)                           OK
+
+Possuir usuários adm(alterar,deletar usuarios e criar adm)            
+
+Rota pra adm criar adm
+
+Rota pra adm deletar usuario
+
+Rota de login recebe senha usuario e gerar o token do mesmo                         OK
+
+Rota para usuario modificar seus dados
+
+Sistema CRUD (30%)
+
+Lógica de negócio, instalador e documentação (valor: 40%)
