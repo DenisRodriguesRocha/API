@@ -1,8 +1,8 @@
-import publicacao from "../models/Publicacao"
+const Publicacao = require("../models/Publicacao");
 
 class PublicacaoController{
-  static listarNoticias = (request, response) => {
-    const {titulo, categoria, dataCriacao} = request.query;
+  static listarPublicacoes = (req, res) => {
+    const {titulo, categoria, dataCriacao} = req.query;
     const filtro = {};
 
     if(titulo){
@@ -17,7 +17,7 @@ class PublicacaoController{
       filtro.dataCriacao = dataCriacao;
     }
 
-    noticias.find(filtro)
+    publicacoes.find(filtro)
 
     .then((noticias) => {
       response.status(200).json(noticias);
@@ -27,82 +27,82 @@ class PublicacaoController{
     })
   }
 
-  static listarNoticiaPorId = (request, response) => {
-    const id = request.params.id;
+  static listarPublicacoesPorId = (req, res) => {
+    const id = req.params.id;
 
-    noticias.findById(id)
-      .then((noticia) => {
-        response.status(200).send(noticia);
+    publicacoes.findById(id)
+      .then((publicacao) => {
+        response.status(200).send(publicacao);
       })
       .catch((error) => {
         response.status(400).send({message: `${error.message} - Id da publicação não encontrado.`})
       })
   }
 
-  static cadastrarNoticia = async (request, response) =>{
-    let noticia = new noticias(request.body);
+  static cadastrarPublicacao = async (req, res) =>{
+    let publicacao = new publicacoes(req.body);
      
-    const idAutor = request.id;
-    noticia.autor = idAutor;
-    //console.log(idAutor);
+    const idUsuario = request.id;
+    publicacao.usuario = idUsuario;
+    //console.log(idUsuario);
 
-    await noticia.save()
+    await publicacao.save()
     
-    .then((noticia) => {
-      response.status(201).send(noticia.toJSON());
+    .then((publicacao) => {
+      res.status(201).send(publicacao.toJSON());
     })
     .catch((error) => {
-      response.status(500).send({message: `${error.message} - falha ao cadastrar noticia.`})
+      res.status(500).send({message: `${error.message} - falha ao cadastrar publicação.`})
     })
   }
 
-  static atualizarNoticia = async (request, response) => {
-    const id = request.params.id;
+  static atualizarPublicacao = async (req, res) => {
+    const id = req.params.id;
 
-    const noticia = await noticias.findById(id);
-    const autorId = noticia.autor.toString();
+    const publicacao = await publicacoes.findById(id);
+    const usuarioId = publicacao.usuario.toString();
 
-    if (!noticia) {
-      return response.status(404).json({ msg: "Noticia não encontrada" });
+    if (!publicacao) {
+      return res.status(404).json({ msg: "Publicação não encontrada" });
     }
 
-    if (autorId !== request.id) {
-      return response.status(403).json({ msg: "Não é possível atualizar noticias de outros autores" });
+    if (usuarioIdId !== req.id) {
+      return res.status(403).json({ msg: "Não é possível atualizar publicações de outros usuários" });
     }
 
 
-    noticias.findByIdAndUpdate(id, {$set: request.body})
+    publicacoes.findByIdAndUpdate(id, {$set: req.body})
     .then((result) => {
-      response.status(200).send({message: 'Noticia atualizada com sucesso'})
+      res.status(200).send({message: 'Publicacao atualizada com sucesso'})
     })
     .catch((error) => {
-      response.status(500).send({message: error.message});
+      res.status(500).send({message: error.message});
     })
   }
 
-  static removerNoticia = async (request, response) => {
-    const id = request.params.id;
+  static removerPublicacao = async (req, res) => {
+    const id = req.params.id;
     
 
-    const noticia = await noticias.findById(id);
-    const autorId = noticia.autor.toString();
-    //console.log(autorId)
+    const publicacao = await publicacoes.findById(id);
+    const usuarioId = publicacao.usuario.toString();
+    //console.log(usuarioId)
 
 
-    if (!noticia) {
-      return response.status(404).json({ msg: "Noticia não encontrada" });
+    if (!publicacao) {
+      return res.status(404).json({ msg: "Publicação não encontrada" });
     }
 
-    if (autorId !== request.id) {
-      return response.status(403).json({ msg: "Não é possível remover noticias de outros autores" });
+    if (usuarioId !== req.id) {
+      return res.status(403).json({ msg: "Não é possível remover publicações de outros autores" });
     }
     
-    noticias.findByIdAndDelete(id)
+    publicacoes.findByIdAndDelete(id)
     .then((result) =>{
-      response.status(200).send({message: 'Noticia removida com sucesso'});
+      res.status(200).send({message: 'Publicação removida com sucesso'});
     })
     .catch((error) => {
-      response.status(400).send({message: error.message});
+      res.status(400).send({message: error.message});
     })
      
 
@@ -110,4 +110,4 @@ class PublicacaoController{
   
 }
 
-export default NoticiaController;
+module.exports = PublicacaoController;

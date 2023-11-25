@@ -16,13 +16,13 @@ class autenticacaoController {
       return res.status(422).json({ msg: "Obrigatório senha!" });
     }
 
-    const autor = await Autor.findOne({ email: email });
+    const usuario = await Autor.findOne({ email: email });
 
-    if (!autor) {
-      return res.status(404).json({ msg: "Autor não encontrado!" });
+    if (!usuario) {
+      return res.status(404).json({ msg: "Usuário não encontrado!" });
     }
 
-    const checkSenha = await bcrypt.compare(senha, autor.senha);
+    const checkSenha = await bcrypt.compare(senha, usuario.senha);
 
     if (!checkSenha) {
       return res.status(422).json({ msg: "Senha inválida" });
@@ -31,7 +31,7 @@ class autenticacaoController {
     try {
       const token = jwt.sign(
         {
-          id: autor._id,
+          id: usuario._id,
         },
         process.env.SECRET
       );
