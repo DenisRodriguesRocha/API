@@ -1,49 +1,26 @@
-const jwt = require('jsonwebtoken');
-const authConfig = require('../config/auth.json');
+import jwt from "jsonwebtoken";
 
-module.exports = (req,res,next)=>{
-    const authHeader = req.headers.authorization;
+const authenticate = (request, response, next) => {
+  const authHeader = request.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
-    if(!authHeader){
-        return res.status(401).json({
-            error: true,
-            message: "Token não fornecido"
-        })
-    };
+  if(!authHeader){
+    return response.status(401).json({msg: "token não enviado"})
+  }
 
-    const parts = authHeader.split(" ");
-    if(parts.length !== 2){
-        return res.status(401).json({
-            error:true,
-            message: 'Tipo do Token inválido'
-        })
-    };
+  if (!token) {
+    return response.status(401).json({ msg: "Acesso negado!" });
+  }
 
-    const [scheme,token] = parts;
+  try {
+    const decode = jwt.verify(token, process.env.SECRET);
+    request.id = decode.id;
     
-    if(scheme.indexOf("Bearer")!== 0){
-        return res.status(401).json({
-            error: true,
-            message: 'Token mal formatado'
-        })
-    };
-
-    return jwt.verify(token,authConfig.secret,(err,decoded)=>{
-
-        console.log(err);
-        console.log(decoded);
-        
-        if(err){
-            return res.status(401).json({
-                error: true,
-                message:'Token inválido/expirou'
-            })
-        };
-
-        req.userLogged = decoded;
-
-
-
-        return next();
-    })
+    next();
+  } catch (error) {
+    
+    response.status(400).json({ msg: "Token inválido!" });
+  }
 }
+
+export default authenticate;

@@ -1,9 +1,10 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import Autor from "../models/Autor.js";
-import checkToken from "../middlewares/chekToken.js";
+import usuarios from "../models/Usuario.js";
+import authenticate from "../middlewares/authenticate.js";
 
-class autenticacaoController {
+
+class AutenticacaoController {
   
   static login = async (req, res) => {
     const { email, senha } = req.body;
@@ -16,7 +17,7 @@ class autenticacaoController {
       return res.status(422).json({ msg: "Obrigatório senha!" });
     }
 
-    const usuario = await Autor.findOne({ email: email });
+    const usuario = await usuarios.findOne({ email: email });
 
     if (!usuario) {
       return res.status(404).json({ msg: "Usuário não encontrado!" });
@@ -29,11 +30,12 @@ class autenticacaoController {
     }
 
     try {
+      const meuSegredo = "hirsvbihbv";
       const token = jwt.sign(
         {
           id: usuario._id,
         },
-        process.env.SECRET
+        meuSegredo
       );
 
       return res
@@ -47,4 +49,4 @@ class autenticacaoController {
  
 }
 
-export default autenticacaoController;
+export default AutenticacaoController;

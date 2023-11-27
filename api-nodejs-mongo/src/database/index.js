@@ -1,13 +1,7 @@
-const mongoose = require('mongoose')
+import mongoose from "mongoose";
 
-mongoose.connect("mongodb+srv://sined:Dr20012004@cluster0.norqwlb.mongodb.net/?retryWrites=true&w=majority")
-    .then(()=>{
-        console.log('Conexão bem-sucedida ao MongoDB');
-    })
-    .catch((error)=>{
-        console.error('Erro ao conectar com o MongoDB',error);
-    })
-mongoose.Promise = global.Promise;
+mongoose.connect("mongodb+srv://sined:Dr20012004@cluster0.norqwlb.mongodb.net/?retryWrites=true&w=majority");
 
-module.exports = mongoose;
+let db = mongoose.connection;
 
+export default db;

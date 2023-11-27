@@ -1,4 +1,4 @@
-const Publicacao = require("../models/Publicacao");
+import Publicacao from '../models/Publicacao.js';
 
 class PublicacaoController{
   static listarPublicacoes = (req, res) => {
@@ -19,8 +19,8 @@ class PublicacaoController{
 
     publicacoes.find(filtro)
 
-    .then((noticias) => {
-      response.status(200).json(noticias);
+    .then((publicacoes) => {
+      response.status(200).json(publicacoes);
     })
     .catch((error) => {
       response.send('Erro ao consultar');
@@ -110,4 +110,4 @@ class PublicacaoController{
   
 }
 
-module.exports = PublicacaoController;
+export default PublicacaoController;
