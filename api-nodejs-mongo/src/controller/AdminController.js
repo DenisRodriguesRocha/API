@@ -10,7 +10,7 @@ class AdminController {
       if (!adminExistente) {
         const nome = 'Admin';
         const email = 'admin@example.com';
-        const senha = 'senhaAdmin'; // Lembre-se de usar uma senha mais segura em produção
+        const senha = 'senhaAdmin'; 
 
         const salt = await bcrypt.genSalt(12);
         const senhaHash = await bcrypt.hash(senha, salt);
@@ -81,8 +81,8 @@ class AdminController {
   static excluirNaoAdmin = async (request, response) => {
     const id = request.params.id;
   
-    // Verifica se o usuário que está fazendo a requisição é um administrador
-    const { isAdmin } = request.user; // Suponha que a informação do usuário seja obtida do token ou de alguma forma de autenticação
+    
+    const { isAdmin } = request.user; 
   
     if (!isAdmin) {
       return response.status(403).json({ msg: 'Apenas administradores podem excluir usuários.' });
