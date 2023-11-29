@@ -38,13 +38,15 @@ class AdminController {
     // #swagger.summary = 'Cadastra admin'
     const { nome, email, senha, biografia } = request.body;
 
-  /*
-    const { isAdmin } = request.user; 
+    /*
+    const idAdmin = request.id;
+    const { isAdmin } = await Admin.findById(idAdmin);
+  
   
     if (!isAdmin) {
       return response.status(403).json({ msg: 'Apenas administradores podem criar novos administradores.' });
     }
-   */
+  */
         if (!nome) {
       return response.status(422).json({ msg: "Obrigatório nome!" });
     }
@@ -99,12 +101,12 @@ class AdminController {
     const id = request.params.id;
   
     /*
-    const { isAdmin } = request.user.isAdmin; 
+    const { isAdmin } = request.id; 
   
     if (!isAdmin) {
       return response.status(403).json({ msg: 'Apenas administradores podem excluir usuários.' });
-    }*/
-  
+    }
+  */
     const usuario = await Usuario.findById(id);
     const admin = await Admin.findById(id);
 

@@ -112,7 +112,7 @@ class PublicacaoController{
       return res.status(404).json({ msg: "Publicação não encontrada" });
     }
 
-    if (usuarioId !== req.id) {
+    if (usuarioId !== req.user.id) {
       return res.status(403).json({ msg: "Não é possível remover publicações de outros autores" });
     }
     

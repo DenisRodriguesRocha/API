@@ -5,6 +5,7 @@ import AdminController from "../controller/AdminController.js";
 const router = express.Router();
 
 router.post('/admin/geraradmin', async (req, res) => {
+  // #swagger.summary = 'Cria Admin por padrão'
     try {
       await AdminController.gerarAdmin();
       res.status(200).json({ message: 'Administrador padrão criado com sucesso.' });

@@ -11,17 +11,7 @@
     "http"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/autenticacao/login": {
+    "/autenticacao/login/usuario": {
       "post": {
         "summary": "Usuário tem acesso ao seu token",
         "description": "",
@@ -58,7 +48,44 @@
         }
       }
     },
-    "/usuario/{id}": {
+    "/autenticacao/login/admin": {
+      "post": {
+        "summary": "Admin tem acesso ao seu token",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "senha": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/usuario/listar/{id}": {
       "get": {
         "summary": "Lista usuários por ID",
         "description": "",
@@ -78,7 +105,60 @@
             "description": "Bad Request"
           }
         }
-      },
+      }
+    },
+    "/usuario/listar": {
+      "get": {
+        "summary": "Lista usuários",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/usuario/cadastrar": {
+      "post": {
+        "summary": "Cadastra usuário",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "senha": {
+                  "example": "any"
+                },
+                "biografia": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/usuario/atualizar/{id}": {
       "put": {
         "summary": "Atualiza usuário",
         "description": "",
@@ -119,7 +199,9 @@
             "description": "Internal Server Error"
           }
         }
-      },
+      }
+    },
+    "/usuario/deletar/{id}": {
       "delete": {
         "summary": "Remove usuário",
         "description": "",
@@ -147,58 +229,7 @@
         }
       }
     },
-    "/usuario": {
-      "get": {
-        "summary": "Lista usuários",
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/usuario/registro": {
-      "post": {
-        "summary": "Cadastra usuário",
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "nome": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "senha": {
-                  "example": "any"
-                },
-                "biografia": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "422": {
-            "description": "Unprocessable Entity"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/publicao/{id}": {
+    "/publicao/listar/{id}": {
       "get": {
         "summary": "Lista publicações por ID",
         "description": "",
@@ -211,13 +242,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
     },
-    "/publicacao": {
+    "/publicacao/listar": {
       "get": {
         "summary": "Lista publicações",
         "description": "",
@@ -239,19 +273,42 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }
     },
-    "/publicacao/registro": {
+    "/publicacao/cadastrar": {
       "post": {
         "summary": "Cadastra publicação",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "titulo": {
+                  "example": "any"
+                },
+                "conteudo": {
+                  "example": "any"
+                },
+                "autor": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"
@@ -259,7 +316,7 @@
         }
       }
     },
-    "/publicacao/{id}": {
+    "/publicacao/atualizar/{id}": {
       "put": {
         "summary": "Atualiza publicação",
         "description": "",
@@ -285,7 +342,9 @@
             "description": "Internal Server Error"
           }
         }
-      },
+      }
+    },
+    "/publicacao/deletar/{id}": {
       "delete": {
         "summary": "Remove publicação",
         "description": "",
@@ -313,8 +372,9 @@
         }
       }
     },
-    "/admin/criar-admin-padrao": {
+    "/admin/geraradmin": {
       "post": {
+        "summary": "Cria Admin por padrão",
         "description": "",
         "responses": {
           "200": {
@@ -326,7 +386,18 @@
         }
       }
     },
-    "/admin/registro": {
+    "/admin/listar": {
+      "get": {
+        "summary": "Lista admins",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/admin/cadastrar": {
       "post": {
         "summary": "Cadastra admin",
         "description": "",
@@ -357,9 +428,6 @@
           "201": {
             "description": "Created"
           },
-          "403": {
-            "description": "Forbidden"
-          },
           "422": {
             "description": "Unprocessable Entity"
           },
@@ -369,7 +437,7 @@
         }
       }
     },
-    "/admin/exluir/{id}": {
+    "/admin/deletarusuario/{id}": {
       "delete": {
         "summary": "Admin remove usuário",
         "description": "",
