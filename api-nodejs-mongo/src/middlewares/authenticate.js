@@ -16,6 +16,7 @@ const authenticate = (request, response, next) => {
     const meuSegredo = "hirsvbihbv";
     const decode = jwt.verify(token, meuSegredo);
     request.id = decode.id;
+
     
     next();
   } catch (error) {

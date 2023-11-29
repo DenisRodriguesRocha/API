@@ -1,9 +1,10 @@
 import Admin from '../models/Admin.js';
+import Usuario from '../models/Usuario.js';
 import bcrypt from 'bcrypt';
 
 class AdminController {
 
-  static async criarAdminPadrao() {
+  static async gerarAdmin() {
     // #swagger.summary = 'Cria Admin por padrão'
     try {
       const adminExistente = await Admin.findOne({ isAdmin: true });
@@ -33,16 +34,17 @@ class AdminController {
     }
   };
 
-  static criarAdmin = async (request, response) => {
+  static cadastrarAdmin = async (request, response) => {
     // #swagger.summary = 'Cadastra admin'
     const { nome, email, senha, biografia } = request.body;
-  
+
+  /*
     const { isAdmin } = request.user; 
   
     if (!isAdmin) {
       return response.status(403).json({ msg: 'Apenas administradores podem criar novos administradores.' });
     }
-  
+   */
         if (!nome) {
       return response.status(422).json({ msg: "Obrigatório nome!" });
     }
@@ -92,28 +94,29 @@ class AdminController {
       });
   };
 
-  static excluirNaoAdmin = async (request, response) => {
+  static deletarUsuario = async (request, response) => {
     // #swagger.summary = 'Admin remove usuário'
     const id = request.params.id;
   
-    // Verifica se o usuário que está fazendo a requisição é um administrador
-    const { isAdmin } = request.user; // Suponha que a informação do usuário seja obtida do token ou de alguma forma de autenticação
+    /*
+    const { isAdmin } = request.user.isAdmin; 
   
     if (!isAdmin) {
       return response.status(403).json({ msg: 'Apenas administradores podem excluir usuários.' });
-    }
+    }*/
   
-    const usuario = await Admin.findById(id);
-  
-    if (!usuario) {
+    const usuario = await Usuario.findById(id);
+    const admin = await Admin.findById(id);
+
+    if (!usuario && !admin) {
       return response.status(404).json({ msg: 'Usuário não encontrado.' });
     }
   
-    if (usuario.isAdmin) {
+    if (admin) {
       return response.status(403).json({ msg: 'Não é possível excluir um administrador.' });
     }
   
-    Admin.findByIdAndDelete(id)
+    Usuario.findByIdAndDelete(id)
       .then(() => {
         response.status(200).json({ msg: 'Usuário não administrador removido com sucesso.' });
       })

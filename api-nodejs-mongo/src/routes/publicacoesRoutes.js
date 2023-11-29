@@ -4,10 +4,10 @@ import PublicacaoController from "../controller/PublicacaoController.js";
 
 const router = express.Router();
 
-router.get("/publicao/:id", PublicacaoController.listarPublicacoesPorId);
-router.get("/publicacao", PublicacaoController.listarPublicacoes);
-router.post("/publicacao/registro", authenticate, PublicacaoController.cadastrarPublicacao);
-router.put("/publicacao/:id", authenticate, PublicacaoController.atualizarPublicacao);
-router.delete("/publicacao/:id", authenticate, PublicacaoController.removerPublicacao);
+router.get("/publicao/listar/:id", PublicacaoController.listarPublicacoesPorId);
+router.get("/publicacao/listar", PublicacaoController.listarPublicacoes);
+router.post("/publicacao/cadastrar", authenticate, PublicacaoController.cadastrarPublicacao);
+router.put("/publicacao/atualizar/:id", authenticate, PublicacaoController.atualizarPublicacao);
+router.delete("/publicacao/deletar/:id", authenticate, PublicacaoController.removerPublicacao);
 
 export default router;

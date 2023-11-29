@@ -5,6 +5,10 @@ const Admin = mongoose.model('Admin', {
   email: String,
   senha: String,
   biografia: String,
+  isAdmin: {
+    type: Boolean,
+    default: false
+  }
 })
 
 export default Admin;
