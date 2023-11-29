@@ -14,5 +14,6 @@ router.post('/admin/criar-admin-padrao', async (req, res) => {
   });
 router.post("/admin/registro",authenticate, AdminController.criarAdmin);
 router.delete("/admin/exluir/:id", authenticate, AdminController.excluirNaoAdmin);
+router.get("/admin",AdminController.listarAdmin)
 
 export default router;

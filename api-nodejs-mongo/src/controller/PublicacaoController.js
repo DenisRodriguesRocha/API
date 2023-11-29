@@ -2,6 +2,7 @@ import Publicacao from '../models/Publicacao.js';
 
 class PublicacaoController{
   static listarPublicacoes = (req, res) => {
+    // #swagger.summary = 'Lista publicações'
     const {titulo, categoria, dataCriacao} = req.query;
     const filtro = {};
 
@@ -28,6 +29,7 @@ class PublicacaoController{
   }
 
   static listarPublicacoesPorId = (req, res) => {
+    // #swagger.summary = 'Lista publicações por ID'
     const id = req.params.id;
 
     publicacoes.findById(id)
@@ -40,11 +42,11 @@ class PublicacaoController{
   }
 
   static cadastrarPublicacao = async (req, res) =>{
+    // #swagger.summary = 'Cadastra publicação'
     let publicacao = new publicacoes(req.body);
      
     const idUsuario = request.id;
     publicacao.usuario = idUsuario;
-    //console.log(idUsuario);
 
     await publicacao.save()
     
@@ -57,6 +59,7 @@ class PublicacaoController{
   }
 
   static atualizarPublicacao = async (req, res) => {
+    // #swagger.summary = 'Atualiza publicação'
     const id = req.params.id;
 
     const publicacao = await publicacoes.findById(id);
@@ -81,6 +84,7 @@ class PublicacaoController{
   }
 
   static removerPublicacao = async (req, res) => {
+    // #swagger.summary = 'Remove publicação'
     const id = req.params.id;
     
 

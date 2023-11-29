@@ -3,10 +3,7 @@ import AutenticacaoController from "../controller/autenticacaoController.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
- res.status(200).json({ msg: "Blog api Denis" });
-});
-
-router.post("/autenticacao/login", AutenticacaoController.login);
+router.post("/autenticacao/login/usuario", AutenticacaoController.loginUsuario);
+router.post("/autenticacao/login/admin", AutenticacaoController.loginAdmin);
 
 export default router;

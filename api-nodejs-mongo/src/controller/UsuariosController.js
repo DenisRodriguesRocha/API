@@ -2,7 +2,9 @@ import usuarios from "../models/Usuario.js";
 import bcrypt from "bcrypt";
 
 class UsuariosController {
+ 
   static listarUsuarios = (request, response) => {
+    // #swagger.summary = 'Lista usuários'
     usuarios
       .find({}, {senha: 0})
       .then((usuarios) => {
@@ -14,6 +16,7 @@ class UsuariosController {
   };
 
   static listarUsuarioPorId = async (request, response) => {
+    // #swagger.summary = 'Lista usuários por ID'
     const id = request.params.id;
 
     await usuarios.findById(id, "-senha")
@@ -29,6 +32,7 @@ class UsuariosController {
   };
 
   static cadastrarUsuario = async (request, response) => {
+    // #swagger.summary = 'Cadastra usuário'
     const { nome, email, senha, biografia } = request.body;
 
     if (!nome) {
@@ -68,6 +72,7 @@ class UsuariosController {
   };
 
   static atualizarUsuario = async (request, response) => {
+    // #swagger.summary = 'Atualiza usuário'
     const {nome, biografia} = request.body;
 
     const id = request.params.id;
@@ -99,6 +104,7 @@ class UsuariosController {
   };
 
   static removerUsuario = async (request, response) => {
+    // #swagger.summary = 'Remove usuário'
     const id = request.params.id;
     const usuarioId = request.id;
 

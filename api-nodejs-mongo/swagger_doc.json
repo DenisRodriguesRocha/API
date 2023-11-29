@@ -23,6 +23,7 @@
     },
     "/autenticacao/login": {
       "post": {
+        "summary": "Usuário tem acesso ao seu token",
         "description": "",
         "parameters": [
           {
@@ -59,6 +60,7 @@
     },
     "/usuario/{id}": {
       "get": {
+        "summary": "Lista usuários por ID",
         "description": "",
         "parameters": [
           {
@@ -78,6 +80,7 @@
         }
       },
       "put": {
+        "summary": "Atualiza usuário",
         "description": "",
         "parameters": [
           {
@@ -118,6 +121,7 @@
         }
       },
       "delete": {
+        "summary": "Remove usuário",
         "description": "",
         "parameters": [
           {
@@ -145,6 +149,7 @@
     },
     "/usuario": {
       "get": {
+        "summary": "Lista usuários",
         "description": "",
         "responses": {
           "200": {
@@ -155,6 +160,7 @@
     },
     "/usuario/registro": {
       "post": {
+        "summary": "Cadastra usuário",
         "description": "",
         "parameters": [
           {
@@ -194,6 +200,7 @@
     },
     "/publicao/{id}": {
       "get": {
+        "summary": "Lista publicações por ID",
         "description": "",
         "parameters": [
           {
@@ -212,6 +219,7 @@
     },
     "/publicacao": {
       "get": {
+        "summary": "Lista publicações",
         "description": "",
         "parameters": [
           {
@@ -239,6 +247,7 @@
     },
     "/publicacao/registro": {
       "post": {
+        "summary": "Cadastra publicação",
         "description": "",
         "responses": {
           "201": {
@@ -252,6 +261,7 @@
     },
     "/publicacao/{id}": {
       "put": {
+        "summary": "Atualiza publicação",
         "description": "",
         "parameters": [
           {
@@ -277,6 +287,7 @@
         }
       },
       "delete": {
+        "summary": "Remove publicação",
         "description": "",
         "parameters": [
           {
@@ -302,8 +313,22 @@
         }
       }
     },
+    "/admin/criar-admin-padrao": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/admin/registro": {
       "post": {
+        "summary": "Cadastra admin",
         "description": "",
         "parameters": [
           {
@@ -335,6 +360,9 @@
           "403": {
             "description": "Forbidden"
           },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -343,6 +371,7 @@
     },
     "/admin/exluir/{id}": {
       "delete": {
+        "summary": "Admin remove usuário",
         "description": "",
         "parameters": [
           {

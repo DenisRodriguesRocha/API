@@ -4,13 +4,14 @@ import bcrypt from 'bcrypt';
 class AdminController {
 
   static async criarAdminPadrao() {
+    // #swagger.summary = 'Cria Admin por padrão'
     try {
       const adminExistente = await Admin.findOne({ isAdmin: true });
 
       if (!adminExistente) {
-        const nome = 'Admin';
-        const email = 'admin@example.com';
-        const senha = 'senhaAdmin'; 
+        const nome = 'admin';
+        const email = 'admin@gmail.com';
+        const senha = 'admin123'; // Lembre-se de usar uma senha mais segura em produção
 
         const salt = await bcrypt.genSalt(12);
         const senhaHash = await bcrypt.hash(senha, salt);
@@ -33,6 +34,7 @@ class AdminController {
   };
 
   static criarAdmin = async (request, response) => {
+    // #swagger.summary = 'Cadastra admin'
     const { nome, email, senha, biografia } = request.body;
   
     const { isAdmin } = request.user; 
@@ -78,11 +80,24 @@ class AdminController {
     }
   };
 
+  static listarAdmin = (request, response) => {
+    // #swagger.summary = 'Lista admins'
+    Admin
+      .find({}, {senha: 0})
+      .then((Admin) => {
+        response.status(200).json(Admin);
+      })
+      .catch((error) => {
+        response.send("Erro ao consultar");
+      });
+  };
+
   static excluirNaoAdmin = async (request, response) => {
+    // #swagger.summary = 'Admin remove usuário'
     const id = request.params.id;
   
-    
-    const { isAdmin } = request.user; 
+    // Verifica se o usuário que está fazendo a requisição é um administrador
+    const { isAdmin } = request.user; // Suponha que a informação do usuário seja obtida do token ou de alguma forma de autenticação
   
     if (!isAdmin) {
       return response.status(403).json({ msg: 'Apenas administradores podem excluir usuários.' });
