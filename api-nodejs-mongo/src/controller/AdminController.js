@@ -12,7 +12,7 @@ class AdminController {
       if (!adminExistente) {
         const nome = 'admin';
         const email = 'admin@gmail.com';
-        const senha = 'admin123'; // Lembre-se de usar uma senha mais segura em produção
+        const senha = 'admin123'; 
 
         const salt = await bcrypt.genSalt(12);
         const senhaHash = await bcrypt.hash(senha, salt);
